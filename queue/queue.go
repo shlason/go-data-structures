@@ -17,7 +17,7 @@ func (q *queue) Enqueue(e element) {
 }
 
 func (q *queue) Dequeue() element {
-	r := q.items[0]
+	r := q.Front()
 	q.items = q.items[1:]
 	return r
 }
@@ -27,7 +27,7 @@ func (q *queue) Front() element {
 }
 
 func (q *queue) IsEmpty() bool {
-	return len(q.items) == 0
+	return q.Size() == 0
 }
 
 func (q *queue) Size() int {
