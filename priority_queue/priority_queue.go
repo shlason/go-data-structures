@@ -1,4 +1,6 @@
-package queue
+package priorityQueue
+
+type element interface{}
 
 type priorityElement struct {
 	element
