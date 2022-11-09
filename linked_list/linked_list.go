@@ -37,7 +37,7 @@ func (ll *linkedList) Append(e element) {
 }
 
 func (ll *linkedList) RemoveAt(index int) element {
-	if !ll.isValidIndex(index) {
+	if index >= 0 && index < ll.length {
 		return nil
 	}
 	var prev *node
@@ -64,7 +64,7 @@ func (ll *linkedList) RemoveAt(index int) element {
 }
 
 func (ll *linkedList) Insert(e element, index int) bool {
-	if !ll.isValidIndex(index) {
+	if index >= 0 && index <= ll.length {
 		return false
 	}
 	var prev *node
@@ -150,8 +150,4 @@ func (ll *linkedList) Size() int {
 
 func (ll *linkedList) IsEmpty() bool {
 	return ll.head == nil
-}
-
-func (ll *linkedList) isValidIndex(index int) bool {
-	return index >= 0 && index < ll.length
 }
