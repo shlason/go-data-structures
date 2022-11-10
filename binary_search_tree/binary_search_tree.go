@@ -83,6 +83,39 @@ func (n *node) postOrderTraverseNode() {
 	fmt.Println(n.key)
 }
 
+func (n *node) findMinNode() *node {
+	if n.left == nil {
+		return n
+	}
+	return n.left.findMinNode()
+}
+
+func (n *node) remove(k key) *node {
+	if n == nil {
+		return nil
+	}
+	if n.key > k {
+		n.left = n.left.remove(k)
+	} else if n.key < k {
+		n.right = n.right.remove(k)
+	} else {
+		if n.left == nil && n.right == nil {
+			return nil
+		}
+		if n.left == nil {
+			return n.right
+		}
+		if n.right == nil {
+			return n.left
+		}
+
+		minNode := n.right.findMinNode()
+		n.key = minNode.key
+		n.right = n.right.remove(minNode.key)
+	}
+	return n
+}
+
 type binarySearchTree struct {
 	root *node
 }
@@ -164,3 +197,81 @@ func (bst *binarySearchTree) Search(k key) bool {
 	}
 	return false
 }
+
+func (bst *binarySearchTree) Remove(k key) {
+	bst.root = bst.root.remove(k)
+}
+
+// func (bst *binarySearchTree) Remove(k key) {
+// 	current := bst.root
+// 	if current == nil {
+// 		return
+// 	}
+// 	var parentN *node
+// 	for current != nil {
+// 		if current.key > k {
+// 			parentN = current
+// 			current = current.left
+// 		} else if current.key < k {
+// 			parentN = current
+// 			current = current.right
+// 		} else {
+// 			// 葉節點
+// 			if current.left == nil && current.right == nil {
+// 				if parentN.left.key == current.key {
+// 					parentN.left = nil
+// 					return
+// 				}
+// 				parentN.right = nil
+// 				return
+// 			}
+// 			// 只有一個左側節點
+// 			if current.left != nil && current.right == nil {
+// 				if parentN.left.key == current.key {
+// 					parentN.left = current.left
+// 					return
+// 				}
+// 				parentN.right = current.left
+// 				return
+// 			}
+// 			// 只有一個右側節點
+// 			if current.left == nil && current.right != nil {
+// 				if parentN.left.key == current.key {
+// 					parentN.left = current.right
+// 					return
+// 				}
+// 				parentN.right = current.right
+// 				return
+// 			}
+// 			// 有兩個節點時
+// 			subParentN := current
+// 			subCurrent := current.right
+
+// 			if subCurrent.left == nil {
+// 				subCurrent.left = current.left
+// 				if parentN.left.key == current.key {
+// 					parentN.left = subCurrent
+// 					return
+// 				}
+// 				parentN.right = subCurrent
+// 				return
+// 			}
+
+// 			for subCurrent.left != nil {
+// 				subParentN = subCurrent
+// 				subCurrent = subCurrent.left
+// 			}
+
+// 			subParentN.left = nil
+// 			subCurrent.left = current.left
+// 			subCurrent.right = current.right
+
+// 			if parentN.left.key == current.key {
+// 				parentN.left = subCurrent
+// 				return
+// 			}
+// 			parentN.right = subCurrent
+// 			return
+// 		}
+// 	}
+// }

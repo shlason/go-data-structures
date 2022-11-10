@@ -26,6 +26,9 @@ func TestBinarySearchTree(t *testing.T) {
 	bst.Insert(18)
 	bst.Insert(25)
 
-	bst.PostOrderTraverse()
-	fmt.Println(bst.Min())
+	bst.PreOrderTraverse()
+	fmt.Println("-------------------------------------")
+	bst.Remove(15)
+	bst.Remove(13)
+	bst.PreOrderTraverse()
 }
