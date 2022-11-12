@@ -44,16 +44,66 @@ func (g *graph) ToString() string {
 	return r
 }
 
+func (g *graph) initailizeColor() map[string]string {
+	colors := make(map[string]string)
+	for _, v := range g.vertices {
+		colors[v] = "white"
+	}
+	return colors
+}
+
+func (g *graph) dfsVisit(
+	vertex string,
+	colors map[string]string,
+	time *int,
+	dt map[string]int,
+	ft map[string]int,
+	pred map[string]string,
+) {
+	*time++
+	colors[vertex] = "grey"
+	dt[vertex] = *time
+	for _, v := range g.adjList[vertex] {
+		if (colors[v]) == "white" {
+			pred[v] = vertex
+			g.dfsVisit(v, colors, time, dt, ft, pred)
+		}
+	}
+	*time++
+	colors[vertex] = "black"
+	ft[vertex] = *time
+}
+
+func (g *graph) DFS() (discoverT map[string]int, finishT map[string]int, pred map[string]string) {
+	colors := g.initailizeColor()
+	time := new(int)
+	discoverT = make(map[string]int)
+	finishT = make(map[string]int)
+	pred = make(map[string]string)
+
+	for _, v := range g.vertices {
+		discoverT[v] = 0
+		finishT[v] = 0
+		pred[v] = ""
+	}
+
+	for _, vertex := range g.vertices {
+		if colors[vertex] == "white" {
+			g.dfsVisit(vertex, colors, time, discoverT, finishT, pred)
+		}
+	}
+	return discoverT, finishT, pred
+}
+
 func (g *graph) BFS(v string) (distance map[string]int, predecessors map[string]string) {
 	q := queue.New()
-	colors := make(map[string]string)
+	colors := g.initailizeColor()
 
 	distance = make(map[string]int)
 	predecessors = make(map[string]string)
 
 	for _, vertex := range g.vertices {
 		distance[vertex] = 0
-		colors[vertex] = "white"
 		predecessors[vertex] = ""
 	}
 

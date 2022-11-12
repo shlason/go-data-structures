@@ -12,7 +12,7 @@ func TestGraph(t *testing.T) {
 	for _, v := range vertices {
 		g.AddVertex(v)
 	}
-
+	fmt.Println("??")
 	g.AddEdge("A", "B")
 	g.AddEdge("A", "C")
 	g.AddEdge("A", "D")
@@ -31,4 +31,9 @@ func TestGraph(t *testing.T) {
 	fmt.Println(distance)
 
 	g.PrintShortestPathByBFS("G")
+	fmt.Println("---------------------")
+	dt, ft, pred := g.DFS()
+	fmt.Println(dt)
+	fmt.Println(ft)
+	fmt.Println(pred)
 }
