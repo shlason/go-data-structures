@@ -107,3 +107,43 @@ func merge(left []int, right []int) []int {
 
 	return result
 }
+
+func (l *list) QuickSort() {
+	quickSortRec(l.items)
+}
+
+func quickSortRec(l []int) {
+	fmt.Println(l)
+	if len(l) < 2 {
+		return
+	}
+	pivot := l[0]
+	i := 0
+	j := len(l) - 1
+	currentP := "right"
+
+	for i != j {
+		if currentP == "right" {
+			if l[j] > pivot {
+				j--
+			} else {
+				l[i] = l[j]
+				i++
+				currentP = "left"
+			}
+		} else {
+			if l[i] <= pivot {
+				i++
+			} else {
+				l[j] = l[i]
+				j--
+				currentP = "right"
+			}
+		}
+	}
+
+	l[i] = pivot
+	fmt.Println(l)
+	quickSortRec(l[0:i])
+	quickSortRec(l[i+1:])
+}

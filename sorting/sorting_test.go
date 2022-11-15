@@ -10,7 +10,7 @@ func TestSorting(t *testing.T) {
 
 	list := createNonSortedList(9)
 	fmt.Println(list)
-	list.MergeSort()
+	list.QuickSort()
 	fmt.Println(list)
 }
 
