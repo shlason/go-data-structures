@@ -113,7 +113,6 @@ func (l *list) QuickSort() {
 }
 
 func quickSortRec(l []int) {
-	fmt.Println(l)
 	if len(l) < 2 {
 		return
 	}
@@ -143,7 +142,39 @@ func quickSortRec(l []int) {
 	}
 
 	l[i] = pivot
-	fmt.Println(l)
+
 	quickSortRec(l[0:i])
 	quickSortRec(l[i+1:])
+}
+
+func (l *list) SequentialSearch(target int) int {
+	for _, item := range l.items {
+		if item == target {
+			return item
+		}
+	}
+	return -1
+}
+
+func (l *list) BinarySearch(target int) int {
+	nl := New()
+	nl.items = make([]int, len(l.items))
+	copy(nl.items, l.items)
+	nl.QuickSort()
+
+	il := 0
+	ir := len(nl.items) - 1
+
+	for il <= ir {
+		im := (il + ir) / 2
+		if nl.items[im] > target {
+			ir = im - 1
+		} else if nl.items[im] < target {
+			il = im + 1
+		} else {
+			return nl.items[im]
+		}
+	}
+
+	return -1
 }
