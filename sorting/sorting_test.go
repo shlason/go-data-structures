@@ -11,6 +11,8 @@ func TestSorting(t *testing.T) {
 	list := createNonSortedList(9)
 	fmt.Println(list)
 	fmt.Println(list.BinarySearch(10))
+	list.QuickSortV2()
+	fmt.Println(list)
 }
 
 func createNonSortedList(size int) *list {
