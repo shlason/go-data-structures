@@ -162,7 +162,7 @@ func quickSortRecV2(list []int) []int {
 
 	list[pivot], list[right] = list[right], list[pivot]
 
-	for i, _ := range list {
+	for i := range list {
 		if list[i] < list[right] {
 			list[left], list[i] = list[i], list[left]
 			left++
